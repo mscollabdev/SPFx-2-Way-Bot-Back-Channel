@@ -1,0 +1,6 @@
+{
+  "workingDir": "./temp/deploy/",
+  "account": "<!-- STORAGE ACCOUNT NAME -->",
+  "container": "sp-fx-bot-backchannel-2-way",
+  "accessKey": "<!-- ACCESS KEY -->"
+}

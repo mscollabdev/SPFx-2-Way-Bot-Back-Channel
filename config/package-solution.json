@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "name": "sp-fx-bot-backchannel-2-way-client-side-solution",
+    "id": "c7cdd6dd-b67d-48b5-8919-d92569de4dc2",
+    "version": "1.0.0.0"
+  },
+  "paths": {
+    "zippedPackage": "solution/sp-fx-bot-backchannel-2-way.sppkg"
+  }
+}

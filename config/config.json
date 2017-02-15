@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "entry": "./lib/webparts/echoBot/EchoBotWebPart.js",
+      "manifest": "./src/webparts/echoBot/EchoBotWebPart.manifest.json",
+      "outputPath": "./dist/echo-bot.bundle.js"
+    }
+  ],
+  "externals": {},
+  "localizedResources": {
+    "echoBotStrings": "webparts/echoBot/loc/{locale}.js"
+  }
+}

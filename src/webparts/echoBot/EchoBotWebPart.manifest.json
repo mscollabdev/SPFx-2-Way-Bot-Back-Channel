@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../node_modules/@microsoft/sp-module-interfaces/lib/manifestSchemas/jsonSchemas/clientSideComponentManifestSchema.json",
+
+  "id": "79cbf2af-0fc5-482e-be8d-c685e6867cad",
+  "alias": "EchoBotWebPart",
+  "componentType": "WebPart",
+  "version": "0.0.1",
+  "manifestVersion": 2,
+
+  "preconfiguredEntries": [{
+    "groupId": "79cbf2af-0fc5-482e-be8d-c685e6867cad",
+    "group": { "default": "Under Development" },
+    "title": { "default": "EchoBot" },
+    "description": { "default": "A simple webpart that demonstrates bi-directional communication with the Bot Framework WebChat back channel." },
+    "officeFabricIconFontName": "Page",
+    "properties": {
+      "description": "EchoBot"
+    }
+  }]
+}
