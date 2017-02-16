@@ -6,21 +6,22 @@ import {
 } from '@microsoft/sp-webpart-base';
 import { escape } from '@microsoft/sp-lodash-subset';
 
-import { App } from '../../BotFramework-WebChat/botchat';
+import { App } from 'botframework-webchat';
 import { DirectLine } from 'botframework-directlinejs';
-require('../../../src/BotFramework-WebChat/botchat.css');
+require('../../../node_modules/BotFramework-WebChat/botchat.css');
+import styles from './EchoBot.module.scss';
 import * as strings from 'echoBotStrings';
 import { IEchoBotWebPartProps } from './IEchoBotWebPartProps';
 
 export default class EchoBotWebPart extends BaseClientSideWebPart<IEchoBotWebPartProps> {
 
   public render(): void {
-    // Generate a random element id for the WebChat container
+    // Generate a random element id for the WebChat container...to support multiple webparts in one page
     var possible:string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     var elementId:string = "";
     for(var i = 0; i < 5; i++)
       elementId += possible.charAt(Math.floor(Math.random() * possible.length));
-    this.domElement.innerHTML = '<div id="' + elementId + '"></div>';
+    this.domElement.innerHTML = `<div id="${elementId}" class="${styles.echobot}"></div>`;
 
     // Get userprofile from SharePoint REST endpoint
     var req = new XMLHttpRequest();
@@ -51,25 +52,25 @@ export default class EchoBotWebPart extends BaseClientSideWebPart<IEchoBotWebPar
       .subscribe(id => console.log("success initializing"));
 
     // Listen for events on the backchannel
-    botConnection.activity$
+    var act:any = botConnection.activity$;
+    act
+      .filter(activity => activity.type == "event" && activity.name == "runShptQuery")
       .subscribe(a => {
         var activity:any = a;
-        if (activity.type == "event" && activity.name == "runShptQuery") {
-          // Parse the entityType out of the value query string
-          var entityType = activity.value.substr(activity.value.lastIndexOf("/") + 1);
+        // Parse the entityType out of the value query string
+        var entityType = activity.value.substr(activity.value.lastIndexOf("/") + 1);
 
-          // Perform the REST call against SharePoint
-          var shptReq = new XMLHttpRequest();
-          shptReq.open("GET", activity.value, false);
-          shptReq.setRequestHeader("Accept", "application/json");
-          shptReq.send();
-          var shptResult = JSON.parse(shptReq.responseText);
+        // Perform the REST call against SharePoint
+        var shptReq = new XMLHttpRequest();
+        shptReq.open("GET", activity.value, false);
+        shptReq.setRequestHeader("Accept", "application/json");
+        shptReq.send();
+        var shptResult = JSON.parse(shptReq.responseText);
 
-          // Call the bot backchannel to give the aggregated results
-          botConnection
-            .postActivity({ type: "event", name: "queryResults", value: { entityType: entityType, count: shptResult.value.length }, from: user })
-            .subscribe(id => console.log("success sending results"));
-        }
+        // Call the bot backchannel to give the aggregated results
+        botConnection
+          .postActivity({ type: "event", name: "queryResults", value: { entityType: entityType, count: shptResult.value.length }, from: user })
+          .subscribe(id => console.log("success sending results"));
       });
   }
 
