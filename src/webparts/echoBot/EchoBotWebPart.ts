@@ -39,7 +39,7 @@ export default class EchoBotWebPart extends BaseClientSideWebPart<IEchoBotWebPar
     App({
         user: user,
         botConnection: botConnection
-      }, document.getElementById(elementId));
+      }, document.getElementById(this.context.instanceId));
 
     // Call the bot backchannel to give it user information
     botConnection
