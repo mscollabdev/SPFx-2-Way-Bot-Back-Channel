@@ -16,12 +16,7 @@ import { IEchoBotWebPartProps } from './IEchoBotWebPartProps';
 export default class EchoBotWebPart extends BaseClientSideWebPart<IEchoBotWebPartProps> {
 
   public render(): void {
-    // Generate a random element id for the WebChat container...to support multiple webparts in one page
-    var possible:string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var elementId:string = "";
-    for(var i = 0; i < 5; i++)
-      elementId += possible.charAt(Math.floor(Math.random() * possible.length));
-    this.domElement.innerHTML = `<div id="${elementId}" class="${styles.echobot}"></div>`;
+    this.domElement.innerHTML = `<div id="${this.context.instanceId}" class="${styles.echobot}"></div>`;
 
     // Get userprofile from SharePoint REST endpoint
     var req = new XMLHttpRequest();
